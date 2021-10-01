@@ -7,7 +7,7 @@ import axios from 'axios';
 import {useState} from 'react';
 
 function MemeCanvas() {
-  const [cimages, setCimages] = useState(["https://i.ibb.co/QJqyb5b/image.png","https://c.tenor.com/mb24Vqz-MxgAAAAC/omg-shocked.gif"]);
+  const [cimages, setCimages] = useState(["https://i.ibb.co/QJqyb5b/image.png","https://c.tenor.com/mb24Vqz-MxgAAAAC/omg-shocked.gif","https://media.tenor.com/images/08be0e03ac18720db1309903689b7cf3/tenor.gif"]);
   const style = {
   display: "flex",
   alignItems: "center",
@@ -40,28 +40,32 @@ function MemeCanvas() {
       })
   }
   
+  function toggleborderson(){
+      var xs = document.getElementsByClassName("memeobject");
+      for (let i = 0; i < xs.length; i++) {
+          xs[i].style.border = "dotted 5px #333";
+      }
+  }
+   function togglebordersoff(){
+      var xs = document.getElementsByClassName("memeobject");
+      for (let i = 0; i < xs.length; i++) {
+          xs[i].style.border = "none";
+      }
+  }
   
   
   return (
     <div className = "arena">
-    <div className = "memecanvas" id = "meme">
-        <h1>Canvas here</h1>
-        {cimages.map(cimage => (
-        <Draggable>
-        <Resizable
-            style={style}
-            defaultSize={{
-              width: 100,
-              height: 100
-            }}
-          >
-        <div className="memeobject"><img style = {{objectFit: "cover", maxWidth:"500px"}} src = {cimage}></img></div>
-        </Resizable>
-        </Draggable>
-      ))}
-        
-      
-    </div>
+        <div onMouseOver={toggleborderson} onMouseOut={togglebordersoff} className = "memecanvas" id = "meme">
+            <h1>Canvas here</h1>
+            {cimages.map(cimage => (
+            <Draggable>
+            <Resizable>
+            <div className="memeobject"><img className = "memeimg" src = {cimage}></img></div>
+            </Resizable>
+            </Draggable>
+          ))}  
+        </div>
     
     <div className = "warehouse">
     <SearchByTenor />
