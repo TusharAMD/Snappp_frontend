@@ -2,21 +2,38 @@ import '../App.css';
 import axios from 'axios';
 import {useState} from 'react';
 
-function SearchByTenor(){
+function Toolbox(){
     
     const [search_term, setsearch_term] = useState("");
     const [lmt, setlmt] = useState("");
     const [tenorresult, setTenorResult] = useState({"tenor":[]});
+   
     
     function getTenor(path, queryObj) {
+        
+        var img = new Image();
+        var dataUrl = "https://i.ibb.co/SR8xrZ2/loading-buffering.gif"
+        img.src = dataUrl;
+        img.height = 30;
+        img.id = "loadingimg"
+        var tenor = document.getElementById("tenor")
+        if (tenor.childNodes.length < 5) {
+            tenor.appendChild(img)
+            }
+        
+        
+        
+        
         axios.post(path, queryObj).then(
             (response) => {
+                document.getElementById("loadingimg").remove()
                 var result = response.data;
                 setTenorResult(result)
                 
                 console.log(result);
             },
             (error) => {
+                document.getElementById("loadingimg").remove()
                 console.log(error);
             }
     );
@@ -52,7 +69,7 @@ function SearchByTenor(){
         
     function sendImageCanvas(t){
 
-        axios.post('https://snapppbackend.herokuapp.com/addonetocanvas/',{"image":t}).then(
+        axios.post('http://127.0.0.1:5000/addonetocanvas/',{"image":t}).then(
             (response) => {
                 var result = response.data;
     
@@ -66,19 +83,16 @@ function SearchByTenor(){
     }
     
     return (
-    <div className = "tenor">
-    <h1>{search_term}</h1>
-    <h1>{lmt}</h1>
+    <div className = "tenor" id="tenor">
+    {/* <h1>{search_term}</h1>*/}
+    {/* <h1>{lmt}</h1> */}
     <form>
-        <h3>Tenor</h3>
-      <input type='text' onChange={setsearch_termHandler} />
-      <input type='text' onChange={setlmtHandler} />
-    
+      <h3>Tenor</h3>  
+      <input placeholder="Enter Gif to search" type='text' onChange={setsearch_termHandler} />
+      <input placeholder="Enter no of Gifs" type='text' onChange={setlmtHandler} />
     </form>
-    
-    
-    
-    <button onClick={()=>getTenor('https://snapppbackend.herokuapp.com/api/', {"search_term":search_term,"lmt":parseInt(lmt)})} /> <br />
+
+    <button onClick={()=>getTenor('http://127.0.0.1:5000/api/', {"search_term":search_term,"lmt":parseInt(lmt)})} >Search</button> <br />
     
    
     
@@ -86,12 +100,14 @@ function SearchByTenor(){
         <>
         
         <img onClick={()=>{sendImageCanvas(t)}} src = {t} width = "100"></img><br />
-        <button onClick={()=>{removeTenorImage(t)}}>X</button><br />
+        <button className="btn btn-remove" onClick={()=>{removeTenorImage(t)}}><i class = "material-icons">remove_circle_outline</i></button><br />
         </>
     )}
+    
+       
     
     
     </div>
   );
 };
-export default SearchByTenor;
+export default Toolbox;

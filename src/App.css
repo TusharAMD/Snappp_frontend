@@ -39,6 +39,10 @@
 
 .memecanvas{
     border-style: solid;
+    min-height:300px;
+    height:100%;
+    margin:10px;
+
 }
 
 .memeobject{
@@ -54,11 +58,20 @@
 }
 .warehouse {
     border-style:solid;
+    height:fit-content;
+    margin:10px;
 }
+
+.heading{
+    display:grid;
+    gap: 4px;
+    grid-template-columns: 80vw auto;
+}
+
 .arena{
     display:grid;
     justify-content: center;
-    gap: 4px;
+    
     
     grid-template-columns: 80vw auto;
     
@@ -67,3 +80,47 @@
     border-style:solid;
     
 }
+.buttons{
+  padding:20px;  
+}
+
+
+.btn-incanvas{
+  -webkit-border-radius: 4;
+  -moz-border-radius: 4;
+  border-radius: 4px;
+  -webkit-box-shadow: 2px 2px 11px #666666;
+  -moz-box-shadow: 2px 2px 11px #666666;
+  box-shadow: 2px 2px 11px #666666;
+  color: #ffffff;
+  padding: 5px;
+  background: #1b0024;
+  text-decoration: none;
+  margin:5px;
+}
+
+.btn-incanvas:hover {
+  background: #294d00;
+  text-decoration: none;
+  color: #ffffff;
+}
+.btn-remove{
+    border-width:2px;
+    border-color:red;
+    padding:0px;
+    margin:5px;
+}
+.btncanvas{
+    margin:3px;
+}
+
+.btncanvas:hover{
+    background-color:#3A3A3A;
+    color:white;
+}
+
+.textboxes{
+    background-color:#A0A0A0;
+    width:80vw;
+}
+
