@@ -204,7 +204,7 @@ function MemeCanvas() {
     }
     
     function getPwa(){
-        axios.post('http://snapppbackend.herokuapp.com/getpwa/',{"user":user.email})
+        axios.post('https://snapppbackend.herokuapp.com/getpwa/',{"user":user.email})
         
       .then(res => {
         const oneImage = res.data["image"];
