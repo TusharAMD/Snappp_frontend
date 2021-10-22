@@ -25,7 +25,7 @@ const Profile = () => {
   console.log(email)
   
   function upvoteHandler(img){
-      axios.post("http://snapppbackend.herokuapp.com/voting/", { "user":email, "img":img, "upvoter": user.email })
+      axios.post("https://snapppbackend.herokuapp.com/voting/", { "user":email, "img":img, "upvoter": user.email })
       .then(res => {
         //console.log(res);
         console.log(res.data);
@@ -38,7 +38,7 @@ const Profile = () => {
     var ele=document.getElementById("memeimages")
     try{ele.innerHTML="<img id='loadingimg' src ='https://i.ibb.co/SR8xrZ2/loading-buffering.gif'></img>"}
     catch{}
-    axios.post("http://snapppbackend.herokuapp.com/profile/", { "user":email })
+    axios.post("https://snapppbackend.herokuapp.com/profile/", { "user":email })
       .then(res => {
         //console.log(res);
         console.log(res.data);
@@ -53,7 +53,7 @@ const Profile = () => {
 
     })
     
-    axios.post("http://snapppbackend.herokuapp.com/profile/", { "user":email,"upvotedby":"" })
+    axios.post("https://snapppbackend.herokuapp.com/profile/", { "user":email,"upvotedby":"" })
       .then(res => {
         //console.log(res);
         console.log(res.data);

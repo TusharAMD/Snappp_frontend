@@ -41,7 +41,7 @@ function MemeCanvas() {
     img.click();
     var z = img.download
     img.remove()
-    axios.post('http://snapppbackend.herokuapp.com/html2canvas/',{"data":dataUrl,"user":user.email})
+    axios.post('https://snapppbackend.herokuapp.com/html2canvas/',{"data":dataUrl,"user":user.email})
       .then(res => {
         console.log(res)
       })
@@ -55,7 +55,7 @@ function MemeCanvas() {
   };
 
   function getOneImage(){
-      axios.post('http://snapppbackend.herokuapp.com/addonetocanvas/',{"user":user.email,"flag":2})
+      axios.post('https://snapppbackend.herokuapp.com/addonetocanvas/',{"user":user.email,"flag":2})
       .then(res => {
         const oneImage = res.data["image"];
 

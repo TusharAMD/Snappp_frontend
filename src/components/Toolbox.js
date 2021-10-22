@@ -95,7 +95,7 @@ function Toolbox(){
       <input className="form-control" placeholder="Enter no of Gifs" type='text' onChange={setlmtHandler} />
     </form>
 
-    <button className="btn btncanvas" onClick={()=>getTenor('http://snapppbackend.herokuapp.com/api/', {"search_term":search_term,"lmt":parseInt(lmt)})} >Search</button> <br />
+    <button className="btn btncanvas" onClick={()=>getTenor('https://snapppbackend.herokuapp.com/api/', {"search_term":search_term,"lmt":parseInt(lmt)})} >Search</button> <br />
     
    
     
