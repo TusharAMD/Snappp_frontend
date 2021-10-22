@@ -72,7 +72,7 @@ function Toolbox(){
         
     function sendImageCanvas(t){
 
-        axios.post('http://127.0.0.1:5000/addonetocanvas/',{"user":user.email,"image":t,"flag":1}).then(
+        axios.post('http://snapppbackend.herokuapp.com/addonetocanvas/',{"user":user.email,"image":t,"flag":1}).then(
             (response) => {
                 var result = response.data;
     
@@ -95,7 +95,7 @@ function Toolbox(){
       <input className="form-control" placeholder="Enter no of Gifs" type='text' onChange={setlmtHandler} />
     </form>
 
-    <button className="btn btncanvas" onClick={()=>getTenor('http://127.0.0.1:5000/api/', {"search_term":search_term,"lmt":parseInt(lmt)})} >Search</button> <br />
+    <button className="btn btncanvas" onClick={()=>getTenor('http://snapppbackend.herokuapp.com/api/', {"search_term":search_term,"lmt":parseInt(lmt)})} >Search</button> <br />
     
    
     
