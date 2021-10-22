@@ -6,6 +6,7 @@ import Toolbox from "./Toolbox";
 import axios from 'axios';
 import {useState} from 'react';
 import React from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function MemeCanvas() {
   
@@ -14,9 +15,10 @@ function MemeCanvas() {
   const forceUpdate = React.useCallback(() => updateState({}), []);  
   const [cimages, setCimages] = useState([]);
   
-  const [textbox, setTextbox] = useState({val:""});
+  const [textbox, setTextbox] = useState("");
   const [nos, setnos] = useState([]);
-
+  const [val, setVal] = useState([])
+  const { user, isAuthenticated, isLoading , loginWithRedirect, logout} = useAuth0();
   
   const style = {
   display: "flex",
@@ -35,6 +37,17 @@ function MemeCanvas() {
     img.src = dataUrl;
     console.log(dataUrl);
     document.body.appendChild(img);
+    img.download = "meme.svg"
+    img.click();
+    var z = img.download
+    img.remove()
+    axios.post('http://127.0.0.1:5000/html2canvas/',{"data":dataUrl,"user":user.email})
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err =>{console.log(err)
+})
+    
   })
   .catch(function (error) {
     console.error('oops, something went wrong!', error);
@@ -42,8 +55,7 @@ function MemeCanvas() {
   };
 
   function getOneImage(){
-      
-      axios.get('http://127.0.0.1:5000/addonetocanvas/')
+      axios.post('http://127.0.0.1:5000/addonetocanvas/',{"user":user.email,"flag":2})
       .then(res => {
         const oneImage = res.data["image"];
 
@@ -54,26 +66,35 @@ function MemeCanvas() {
   function toggleborderson(){
       var xs = document.getElementsByClassName("memeobject");
       for (let i = 0; i < xs.length; i++) {
-          try{
-          xs[i].style.border = "dotted 5px #333";
+          xs[i].style.border = "dotted 1px #333";
+          xs[i].style.height = "100%"
           xs[i].children[1].style.display = "inline"
           xs[i].children[2].style.display = "inline"
+          try{
+          
+          xs[i].children[3].style.display = "inline"
           }
-          catch{
-              console.log("error")
+          catch(err){
+              console.log(err,"borders on")
           }
       }
   }
    function togglebordersoff(){
       var xs = document.getElementsByClassName("memeobject");
       for (let i = 0; i < xs.length; i++) {
-          try{
-          xs[i].style.border = "none";
           xs[i].children[1].style.display = "none"
           xs[i].children[2].style.display = "none"
+          try{
+          xs[i].style.border = "none";
+          
+          if (xs[i].children[0].children[0].nodeName == "text"){
+          xs[i].style.height = "94%"
           }
-          catch{
-              console.log("error")
+          
+          xs[i].children[3].style.display = "none"
+          }
+          catch(err){
+              console.log(err,"borders off")
           }
       }
       }
@@ -88,6 +109,32 @@ function MemeCanvas() {
         setCimages(x);
         forceUpdate();
         };
+        
+    function deletetext(txt){
+       var xs = document.getElementsByClassName("canvatext")
+       for(let i=0;i<xs.length;i++){
+           if(xs[i].innerHTML == txt){
+               xs[i].parentElement.parentElement.parentElement.style.display="none"
+           }
+       }
+    }
+    function bringtextfront(txt){
+       var xs = document.getElementsByClassName("canvatext")
+       for(let i=0;i<xs.length;i++){
+           if(xs[i].innerHTML == txt){
+               var zindexno = xs[i].parentElement.parentElement.parentElement.style.zIndex
+               console.log(zindexno)
+               if (zindexno==""){
+                   xs[i].parentElement.parentElement.parentElement.style.zIndex = 3
+               }
+               else{
+                   xs[i].parentElement.parentElement.parentElement.style.zIndex = parseInt(zindexno)+1
+                   console.log(xs[i].parentElement.parentElement.parentElement.style.zIndex)
+               }
+           }
+       }
+    }
+       
     
     function bringinfront(cimage){
        var x = document.getElementsByClassName("memeimg")
@@ -100,38 +147,81 @@ function MemeCanvas() {
                x[i].parentElement.parentElement.style.zIndex = 3
            }
            else{
-               x[i].parentElement.parentElement.style.zIndex = zindexno+1
+               x[i].parentElement.parentElement.style.zIndex = parseInt(zindexno)+1
+               console.log(x[i].parentElement.parentElement.style.zIndex)
            }
            }
        }
     }
+    
+    function changeColor(txt){
+       const colors = ["red", "green", "yellow", "white", "blue", "magenta", "orange"];
+       var x = document.getElementsByClassName("canvatext")
+       var randomNo = Math.floor(Math.random() * colors.length)
+       var randomNo2 = Math.floor(Math.random() * colors.length)
+        
+        for (let i=0;i<x.length;i++){
+            if(x[i].innerHTML == txt){
+            x[i].style.stroke=colors[randomNo] 
+            x[i].style.fill=colors[randomNo2]
+            }
+        }
+    }
         
     
-    function onAddTextHandler(e){
-        var prevval = nos
-        prevval.push(e.target.value)
-        setTextbox(prevval)
-        console.log(textbox,"<<<<<<<<<<<<<<<<<<<<<")
+    
+    function dothis(){
         
-        var currentIndex = nos.length-1
-        var id="textcanvas"+currentIndex
-        var x = document.getElementById(id)
-        var textbox = document.createElement("svg")
-        textbox.setAttribute("viewBox","0 0 56 18")
-        var texts = document.createElement("text")
-        texts.setAttribute("x","0")
-        texts.setAttribute("y","0")
-        texts.innerText=textbox.val
-        textbox.appendChild(texts)
-        x.appendChild(textbox)
+        setVal(prevtext=>[...prevtext,textbox])
+        console.log(val,"<<<<<<<<<<<<<<,")
+        var prevnos = [...nos]
+        console.log(prevnos)
+        console.log(prevnos.length)
+        prevnos.push(prevnos.length)
+        setnos(prevnos)
+        forceUpdate();
+        
+        /*
+        
+        var prevnos =[]
+        prevnos=[...nos]
+        
+        console.log(prevnos.length)
+        console.log(typeof(prevnos))
+        console.log(prevnos)
+        console.log(nos,">>>")
+        
+        var len = prevnos.length
+        prevnos.push(0)
+        for(let i=0;i<len;i++){
+        prevnos.push(i)
+        console.log(prevnos)
+        }
+        setnos(prevnos)
+        */
+
+        
     }
+    
+    function getPwa(){
+        axios.post('http://127.0.0.1:5000/getpwa/',{"user":user.email})
+        
+      .then(res => {
+        const oneImage = res.data["image"];
+        setCimages(precimages => [...precimages, oneImage])
+      })
+      .catch(function (error) {
+    console.error('oops, something went wrong!', error);
+  })
+    }
+
   
   
   
   return (
     <>
     <div className = "heading">
-    <h1>Canvas here</h1>
+    <h1>Make your Meme</h1>
     </div>
     <div>
     
@@ -141,6 +231,8 @@ function MemeCanvas() {
         
         <Resizable enable={{
       bottomRight:true,
+      topRight:true,
+      bottom:true,
     }}>
         <div onMouseOver={toggleborderson} onMouseOut={togglebordersoff} className = "memecanvas" id = "meme">
 
@@ -149,24 +241,34 @@ function MemeCanvas() {
             <Draggable>
             <Resizable>
             <div className="memeobject"><img className = "memeimg" src = {cimage}></img>
-            <button className="btn btn-incanvas" onClick={()=>{deleteele(cimage)}}><i class = "material-icons">delete</i></button>
-            <button className="btn btn-incanvas" onClick={()=>{bringinfront(cimage)}}><i class = "material-icons">flip_to_front</i></button></div>
+            <button className="btn btn-incanvas" onClick={()=>{deleteele(cimage)}}><i className = "material-icons">delete</i></button>
+            <button className="btn btn-incanvas" onClick={()=>{bringinfront(cimage)}}><i className = "material-icons">flip_to_front</i></button></div>
             </Resizable>
             </Draggable>
             
           ))} 
-
-        {textbox.nos.map((t,index)=>
-            
-            <Draggable style={"none"}>
+          
+          
+          {nos.map(n => (
+              
+            <Draggable>
             <Resizable>
-            <div className="memeobject" id={"textcanvas"+index}>
-            <button className="btn btn-incanvas" ><i class = "material-icons">delete</i></button>
-            <button className="btn btn-incanvas" ><i class = "material-icons">flip_to_front</i></button></div>
+            <div className="memeobject">
+            
+            <svg className="textonmeme" viewBox="0 0 600 18">
+              <text className = "canvatext" x="0" y="15" style={{stroke: "white", strokeWidth: 0.3}} fill = "black">{val[n]}</text>
+
+            </svg>
+            
+            <button className="btn btn-incanvas" onClick={()=>{changeColor(val[n])}} ><i className = "material-icons">casino</i></button>
+            <button className="btn btn-incanvas" onClick={()=>{deletetext(val[n])}} ><i className = "material-icons">delete</i></button>
+            <button className="btn btn-incanvas" onClick={()=>{bringtextfront(val[n])}}><i className = "material-icons">flip_to_front</i></button></div>
             </Resizable>
             </Draggable>
-        )}
-                
+            
+          ))}
+
+           
            
 
           
@@ -182,16 +284,15 @@ function MemeCanvas() {
     <div className = "buttons">
     <button className="btn btncanvas" id = "btnhtml2canvas" onClick={html2canvas}> Save</button>
     <button className="btn btncanvas" id = "getData" onClick={getOneImage}> Get Images </button>
+    <button className="btn btncanvas" id = "getpwa" onClick={getPwa}> Get Snap </button>
     <button className="btn btncanvas" id = "Reset" onClick={()=>setCimages([])}>Reset</button>
     </div>
     </div>
     
     <div className="textboxes">
     
-
-    <input type="text" value={textbox.val} onChange={(e) => setTextbox({...textbox, "val":e.target.value}) }/>
-    <button type="submit" className="btn btncanvas" id = "inputbox" onClick={() => onAddTextHandler()}>Add Text</button>
-
+    <input className="inputbox" value={textbox} onChange={(e)=>setTextbox(e.target.value)} />
+    <button className="btn" onClick={dothis}>Add</button>
     </div>
     </>
   );

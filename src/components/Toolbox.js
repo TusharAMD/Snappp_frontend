@@ -1,13 +1,14 @@
 import '../App.css';
 import axios from 'axios';
 import {useState} from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Toolbox(){
     
     const [search_term, setsearch_term] = useState("");
     const [lmt, setlmt] = useState("");
     const [tenorresult, setTenorResult] = useState({"tenor":[]});
-   
+    const { user, isAuthenticated, isLoading , loginWithRedirect, logout} = useAuth0();
     
     function getTenor(path, queryObj) {
         
@@ -26,7 +27,9 @@ function Toolbox(){
         
         axios.post(path, queryObj).then(
             (response) => {
-                document.getElementById("loadingimg").remove()
+                try{
+                document.getElementById("loadingimg").remove()}
+                catch(error){console.log(error)}
                 var result = response.data;
                 setTenorResult(result)
                 
@@ -69,7 +72,7 @@ function Toolbox(){
         
     function sendImageCanvas(t){
 
-        axios.post('http://127.0.0.1:5000/addonetocanvas/',{"image":t}).then(
+        axios.post('http://127.0.0.1:5000/addonetocanvas/',{"user":user.email,"image":t,"flag":1}).then(
             (response) => {
                 var result = response.data;
     
@@ -88,11 +91,11 @@ function Toolbox(){
     {/* <h1>{lmt}</h1> */}
     <form>
       <h3>Tenor</h3>  
-      <input placeholder="Enter Gif to search" type='text' onChange={setsearch_termHandler} />
-      <input placeholder="Enter no of Gifs" type='text' onChange={setlmtHandler} />
+      <input className="form-control" placeholder="Enter Gif to search" type='text' onChange={setsearch_termHandler} />
+      <input className="form-control" placeholder="Enter no of Gifs" type='text' onChange={setlmtHandler} />
     </form>
 
-    <button onClick={()=>getTenor('http://127.0.0.1:5000/api/', {"search_term":search_term,"lmt":parseInt(lmt)})} >Search</button> <br />
+    <button className="btn btncanvas" onClick={()=>getTenor('http://127.0.0.1:5000/api/', {"search_term":search_term,"lmt":parseInt(lmt)})} >Search</button> <br />
     
    
     

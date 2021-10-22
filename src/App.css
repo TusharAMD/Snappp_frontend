@@ -1,3 +1,6 @@
+body{
+    background-color:rgb(255, 253, 208);
+}
 .App {
   text-align: center;
 }
@@ -38,7 +41,7 @@
 }
 
 .memecanvas{
-    border-style: solid;
+    border-style: none solid solid none;
     min-height:300px;
     height:100%;
     margin:10px;
@@ -48,7 +51,6 @@
 .memeobject{
     
     height:100%;
-    width:100%;
     object-fit:fill;
 }
 
@@ -122,5 +124,75 @@
 .textboxes{
     background-color:#A0A0A0;
     width:80vw;
+    height:50px;
+    display:flex;
+    justify-content:center;
+    flex:2 1px;
+    
 }
 
+.textonmeme{
+height: 100%;
+font-family: "Impact";
+color:red;
+}
+.textonmeme:hover{
+    background-color:gray;
+}
+
+.inputbox{
+    padding:10px;
+    margin:10px;
+    flex-grow:1;
+}
+.ProfileContainer{
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: 70%  30%;
+}
+.checked {
+color: orange;
+}
+#tenor{
+    padding:10px;
+    margin:10px;
+}
+
+.eachmeme:nth-child(odd){
+background-color:rgba(243, 171, 138,0.5);
+}
+.eachmeme:nth-child(even){
+background-color:rgba(225, 119, 112,0.5);
+}
+
+.upvote{
+    color:rgb(5, 122, 95);
+    padding:2px;
+    margin:2px;
+    background-color:white;
+}
+.downvote{
+    color:rgb(150, 26, 50);
+    padding:2px;
+    margin:2px;
+    background-color:white;
+}
+.likes{
+    display:inline;
+}
+.tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.likes:hover .tooltiptext {
+  visibility: visible;
+}
