@@ -72,7 +72,7 @@ function Toolbox(){
         
     function sendImageCanvas(t){
 
-        axios.post('http://snapppbackend.herokuapp.com/addonetocanvas/',{"user":user.email,"image":t,"flag":1}).then(
+        axios.post('https://snapppbackend.herokuapp.com/addonetocanvas/',{"user":user.email,"image":t,"flag":1}).then(
             (response) => {
                 var result = response.data;
     
