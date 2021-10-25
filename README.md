@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# Snappp (Meme Maker)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In this project I have created a meme making web app using React js for frontend and flask for backend. It also has a standalone progressive web app that is used to take snap shots or photos from mobile camera of real objects and send it to the Meme Canvas.
 
-## Available Scripts
+Note: This whole project is divided into 3 repositories, frontend,backend and for pwa. Links are available here
+Frontend: https://github.com/TusharAMD/Snappp_frontend
+Backend: https://github.com/TusharAMD/snapppbackend
+PWA: https://github.com/TusharAMD/Snappp_pwa
 
-In the project directory, you can run:
+## Features
+In this web app user can make his/her own meme similar to http://imgflip.com/. Following are some of the important features
+- Add gifs from "Tenor" api to your meme
+- Facility to add own images using pwa in your phone and background is magically removed (similar to https://www.remove.bg/)
+- Add your text to the canvas and also chnage color randomly
+- "Bring forward" feature on the objects so that transparent objects can stay on top
+- Authentication system
+- Save meme and see a list of your collection in profile section.
+- View someone else's collection by email id
+- Like others meme
 
-### `npm start`
+## Working
+-First of let us see gif part. I have used Tenor api to grab the gif according to text and number of images user wants (query)
+This is operated in backend and React requests the data using axios. (In this project I have used axios to perform all requests at end point of my Backend)
+-Then on clicking get images the image is displayed on the canvas.
+-The canvas is basically a div element and in that all the elements are resizeable and draggable. This is acheived by react and it gives use the actual freedom to make a meme
+-By clicking on save button the user can save the div element as SVG image and that image data is send to backend and stored in database with user details
+-Throughout the project I have used mongodb for database and in total I have used 3 Tables 
+-The user data is well organised and user can easily retrieve the data
+-The authentication is made using Auth0 and its carried out in frontend.
+-Now another important feature is giving user the ability to upload his/her own images. For this I have made a Progressive Web App that can be installed on mobile phone
+-This PWA is not deployed due to heroku slug size issue in free tier. So we can simply run the flask file using python and then visit the website using any mobile device
+-Then Click add to homepage. Open the app and enter email id and also click photo using your mobile camera.
+-This process takes some time to remove the background and then a done message will be displayed
+-After that user can click get snap to get the "background removed pic" and its ready to use in the web app
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tech Stack Used
+-React
+-Flask
+-REST APIs
+-MongoDB
+-Flask PWA 
+-Auth0
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Made By
+Tushar Amdoskar
+https://www.linkedin.com/in/tushar-amdoskar/
