@@ -10,6 +10,7 @@ import {
   Link
 } from "react-router-dom";
 
+// Basic Navbar, navigations handled through Router and Login, Logout can be accessed from here
 
 const Navbar = () => {
   const { user, isAuthenticated, isLoading , loginWithRedirect, logout} = useAuth0();
