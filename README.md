@@ -3,9 +3,9 @@
 In this project I have created a meme making web app using React js for frontend and flask for backend. It also has a standalone progressive web app that is used to take snap shots or photos from mobile camera of real objects and send it to the Meme Canvas.
 
 Note: This whole project is divided into 3 repositories, frontend,backend and for pwa. Links are available here
--Frontend: https://github.com/TusharAMD/Snappp_frontend
--Backend: https://github.com/TusharAMD/snapppbackend
--PWA: https://github.com/TusharAMD/Snappp_pwa
+- Frontend: https://github.com/TusharAMD/Snappp_frontend
+- Backend: https://github.com/TusharAMD/snapppbackend
+- PWA: https://github.com/TusharAMD/Snappp_pwa
 
 ## Live Links
 https://snapppfrontend.herokuapp.com/
