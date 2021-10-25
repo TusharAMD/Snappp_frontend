@@ -9,6 +9,8 @@ Note: This whole project is divided into 3 repositories, frontend,backend and fo
 
 ## Live Links
 https://snapppfrontend.herokuapp.com/
+## Video
+https://youtu.be/mzcBiRGunXY
 
 ## Features
 In this web app user can make his/her own meme similar to http://imgflip.com/. Following are some of the important features
