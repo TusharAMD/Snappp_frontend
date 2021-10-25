@@ -7,7 +7,7 @@ Note: This whole project is divided into 3 repositories, frontend,backend and fo
 -Backend: https://github.com/TusharAMD/snapppbackend
 -PWA: https://github.com/TusharAMD/Snappp_pwa
 
-##Live Links
+## Live Links
 https://snapppfrontend.herokuapp.com/
 
 ## Features
