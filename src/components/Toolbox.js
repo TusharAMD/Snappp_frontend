@@ -3,6 +3,7 @@ import axios from 'axios';
 import {useState} from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 
+// Toolbox component to get Tenor gifs, more features to be added
 function Toolbox(){
     
     const [search_term, setsearch_term] = useState("");
@@ -10,6 +11,7 @@ function Toolbox(){
     const [tenorresult, setTenorResult] = useState({"tenor":[]});
     const { user, isAuthenticated, isLoading , loginWithRedirect, logout} = useAuth0();
     
+    // Get Tenor Images by making query to backend using axios
     function getTenor(path, queryObj) {
         
         var img = new Image();
@@ -42,7 +44,7 @@ function Toolbox(){
     );
     }
     
-    
+    // Two useState hooks to set the form fields
     const setsearch_termHandler = (event) => {
         console.log(event.target.value)
         setsearch_term(event.target.value);
@@ -53,6 +55,7 @@ function Toolbox(){
         setlmt(event.target.value);
     }
     
+    // Delete image that we got
     function removeTenorImage (t)  {
         var x = tenorresult.tenor
         //console.log(x)
@@ -69,7 +72,8 @@ function Toolbox(){
         
         //console.log(t);
         };
-        
+    
+    // Send Image from toolbox to canvas
     function sendImageCanvas(t){
 
         axios.post('https://snapppbackend.herokuapp.com/addonetocanvas/',{"user":user.email,"image":t,"flag":1}).then(
