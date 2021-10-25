@@ -8,6 +8,7 @@ import {useState} from 'react';
 import React from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 
+//Canvas of the meme
 function MemeCanvas() {
   
     
@@ -28,7 +29,7 @@ function MemeCanvas() {
   objectFit: "fill"
     };
   
-  
+  // Function to convert div to SVG
   function html2canvas(){
   var meme =  document.getElementById("meme");
   htmlToImage.toSvg(meme)
@@ -53,7 +54,8 @@ function MemeCanvas() {
     console.error('oops, something went wrong!', error);
   });
   };
-
+  
+  // Get Images from Tenor component to Canvas
   function getOneImage(){
       axios.post('https://snapppbackend.herokuapp.com/addonetocanvas/',{"user":user.email,"flag":2})
       .then(res => {
@@ -62,7 +64,7 @@ function MemeCanvas() {
         setCimages(precimages => [...precimages, oneImage])
       })
   }
-  
+  // When user mouse is inside the canvas the borders and also other buttons like delete, bring to front should become visible, this is the function that handles that
   function toggleborderson(){
       var xs = document.getElementsByClassName("memeobject");
       for (let i = 0; i < xs.length; i++) {
@@ -79,6 +81,7 @@ function MemeCanvas() {
           }
       }
   }
+  // Opposite of on, only images and gif will be present when mouse is not over component
    function togglebordersoff(){
       var xs = document.getElementsByClassName("memeobject");
       for (let i = 0; i < xs.length; i++) {
@@ -98,7 +101,8 @@ function MemeCanvas() {
           }
       }
       }
-      
+     
+  // Simple function to delete the meme object 
     function deleteele(cimage){
        var x = cimages
        const index = x.indexOf(cimage);
@@ -109,7 +113,8 @@ function MemeCanvas() {
         setCimages(x);
         forceUpdate();
         };
-        
+     
+  // Simple function to delete the meme text
     function deletetext(txt){
        var xs = document.getElementsByClassName("canvatext")
        for(let i=0;i<xs.length;i++){
@@ -118,6 +123,7 @@ function MemeCanvas() {
            }
        }
     }
+  // Function to Bring Text matter forward
     function bringtextfront(txt){
        var xs = document.getElementsByClassName("canvatext")
        for(let i=0;i<xs.length;i++){
@@ -135,7 +141,7 @@ function MemeCanvas() {
        }
     }
        
-    
+    // Function to Bring Images forward
     function bringinfront(cimage){
        var x = document.getElementsByClassName("memeimg")
        for (let i=0;i<x.length;i++){
@@ -154,6 +160,7 @@ function MemeCanvas() {
        }
     }
     
+  // Randomly Change color of the Text
     function changeColor(txt){
        const colors = ["red", "green", "yellow", "white", "blue", "magenta", "orange"];
        var x = document.getElementsByClassName("canvatext")
@@ -169,11 +176,10 @@ function MemeCanvas() {
     }
         
     
-    
+    // This function adds text to the canvas by setting length using useState component
     function dothis(){
         
         setVal(prevtext=>[...prevtext,textbox])
-        console.log(val,"<<<<<<<<<<<<<<,")
         var prevnos = [...nos]
         console.log(prevnos)
         console.log(prevnos.length)
@@ -181,28 +187,8 @@ function MemeCanvas() {
         setnos(prevnos)
         forceUpdate();
         
-        /*
-        
-        var prevnos =[]
-        prevnos=[...nos]
-        
-        console.log(prevnos.length)
-        console.log(typeof(prevnos))
-        console.log(prevnos)
-        console.log(nos,">>>")
-        
-        var len = prevnos.length
-        prevnos.push(0)
-        for(let i=0;i<len;i++){
-        prevnos.push(i)
-        console.log(prevnos)
-        }
-        setnos(prevnos)
-        */
-
-        
     }
-    
+    // To get data that was send by PWA (Get Snap button)
     function getPwa(){
         axios.post('https://snapppbackend.herokuapp.com/getpwa/',{"user":user.email})
         
@@ -216,7 +202,7 @@ function MemeCanvas() {
     }
 
   
-  
+  // Rendering
   
   return (
     <>
@@ -236,7 +222,6 @@ function MemeCanvas() {
     }}>
         <div onMouseOver={toggleborderson} onMouseOut={togglebordersoff} className = "memecanvas" id = "meme">
 
-            {/*console.log(cimages,"<<<<<<<")*/}
             {cimages.map(cimage => (
             <Draggable>
             <Resizable>
