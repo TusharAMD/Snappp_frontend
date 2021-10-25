@@ -11,6 +11,8 @@ import {
   useParams
 } from "react-router-dom";
 
+// This component is used to load all the collection of memes user had made till now. Basically we are making api call to backend and flask in turn checks with database and get the user data.
+
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [imgdata, setImgdata] = useState({"result":[]});
@@ -24,6 +26,7 @@ const Profile = () => {
   let {email} = useParams();
   console.log(email)
   
+  // When upvote is done add upvote to database
   function upvoteHandler(img){
       axios.post("https://snapppbackend.herokuapp.com/voting/", { "user":email, "img":img, "upvoter": user.email })
       .then(res => {
@@ -33,6 +36,7 @@ const Profile = () => {
     })
   }
   
+  // Do this on loading of the page only
   useEffect(() => {
      
     var ele=document.getElementById("memeimages")
